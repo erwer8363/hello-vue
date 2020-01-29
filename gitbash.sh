@@ -3,6 +3,11 @@
 
 git pull
 git add .
-echo $1
-git commit -m $1
-git push
+if [ -z $1  ]
+then echo "输入不能为空"
+else
+  echo $1
+  git commit -m $1
+  git push
+fi
+
