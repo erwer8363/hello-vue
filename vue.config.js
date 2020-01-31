@@ -2,6 +2,7 @@ const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const BabiliPlugin = require('babili-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 // process.env.VUE_APP_API
@@ -10,7 +11,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: '/',
+  publicPath: isDev ? '/' : './',
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false,
@@ -24,6 +25,13 @@ module.exports = {
         minRatio: 0.8,
       }),
       new BundleAnalyzerPlugin(),
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          warnings: false,
+          drop_debugger: true,
+          drop_console: true,
+        },
+      }),
     ]
     const pluginDev = []
     if (!isDev) {
@@ -36,6 +44,10 @@ module.exports = {
     // console.log('传进来的配置文件是...', config)
     config.resolve.alias
       .set('@', resolve('src'))
+    config.resolve.extensions
+      .add('.vue')
+      .add('.js')
+      .add('.scss')
     config.when(!isDev,
       (config) => config.plugin('minify').use(BabiliPlugin),
       (config) => config.devtool('source-map'))

@@ -25,7 +25,15 @@ module.exports = {
         map:[
           ['@','./src/']
         ]
-      }
+      },
+      'import/extensions':[
+        '.vue',
+        '.js',
+        '.jsx'
+      ]
+      // webpack:{
+      //   "config":"node_modules/@vue/cli-server/webpack.config.js"
+      // }
     }
   },
   plugins: [
@@ -48,6 +56,10 @@ module.exports = {
     'no-console': "off",
     'global-require': "off",
     'no-param-reassign': "off",
-    'no-shadow': "off"
+    'no-shadow': "off",
+    // 'import/extensions':['error','always',{
+    //   'js':'never',
+    //   'vue':'never'
+    // }]
   },
 };
