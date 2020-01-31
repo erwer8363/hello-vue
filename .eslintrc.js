@@ -48,5 +48,6 @@ module.exports = {
     'no-console': "off",
     'global-require': "off",
     'no-param-reassign': "off",
+    'no-shadow': "off"
   },
 };
