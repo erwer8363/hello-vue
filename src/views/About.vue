@@ -4,7 +4,7 @@
     <button @click="handleChange('B')">显示B组件</button>
     <button @click="handleChange('C')">显示C组件</button>
 
-    <component :is="component"/>
+    <component :is="component" :txt="msg"/>
   </div>
 </template>
 <script>
@@ -16,6 +16,8 @@ export default {
   data() {
     return {
       component: componentA,
+      msg: 'hello world',
+      newMsg: '',
     }
   },
   methods: {

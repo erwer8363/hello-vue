@@ -1,12 +1,18 @@
 const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 const BabiliPlugin = require('babili-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const merge = require('webpack-merge')
+
+const configs = require('./config')
 
 const isDev = process.env.NODE_ENV === 'development'
+const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
+
 // process.env.VUE_APP_API
 function resolve(dir) {
+  console.log('当前是哪个模式', process.env.VUE_APP_TITLE)
   return path.resolve(__dirname, dir)
 }
 
@@ -20,7 +26,7 @@ module.exports = {
       new CompressionPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(`\\.(${['js', 'css'].join('|')}$)`),
+        test: new RegExp(`\\.(${ ['js', 'css'].join('|') }$)`),
         threshold: 8192,
         minRatio: 0.8,
       }),
@@ -42,12 +48,13 @@ module.exports = {
   },
   chainWebpack: (config) => {
     // console.log('传进来的配置文件是...', config)
-    config.resolve.alias
-      .set('@', resolve('src'))
-    config.resolve.extensions
-      .add('.vue')
-      .add('.js')
-      .add('.scss')
+    config.resolve.alias.set('@', resolve('src')).set('assets', resolve('src/assets'))
+    config.resolve.extensions.add('.vue').add('.js').add('.scss')
+    config.plugin('define').tap((args) => {
+      let name = 'process.env'
+      args[0][name] = merge(args[0][name], cfg)
+      return args
+    })
     config.when(!isDev,
       (config) => config.plugin('minify').use(BabiliPlugin),
       (config) => config.devtool('source-map'))
@@ -73,6 +80,12 @@ module.exports = {
     https: false,
     open: true,
     hotOnly: true,
+    proxy: {
+      '/repos': {
+        target: 'https://api.github.com',
+        changeOrigin: true,
+      },
+    },
   },
   parallel: require('os').cpus().length > 1,
 }

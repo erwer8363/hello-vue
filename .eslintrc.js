@@ -3,12 +3,12 @@ module.exports = {
     browser: true,
     es6: true,
     node: true,
-    amd: true
+    amd: true,
   },
   extends: [
     'plugin:vue/essential',
     'airbnb-base',
-    'eslint:recommended'
+    'eslint:recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -16,50 +16,52 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 2018,
-    parser:'babel-eslint',
+    parser: 'babel-eslint',
     sourceType: 'module',
   },
-  settings:{
+  settings: {
     'import/resolver': {
-      alias: {
-        map:[
-          ['@','./src/']
-        ]
+      //   alias: {
+      //     map: [
+      //       ['@', './src/'],
+      //     ],
+      //   },
+      //   'import/extensions': [
+      //     '.vue',
+      //     '.js',
+      //     '.jsx',
+      //   ],
+      webpack: {
+        config: 'node_modules/@vue/cli-service/webpack.config.js',
       },
-      'import/extensions':[
-        '.vue',
-        '.js',
-        '.jsx'
-      ]
-      // webpack:{
-      //   "config":"node_modules/@vue/cli-server/webpack.config.js"
-      // }
-    }
+    },
   },
   plugins: [
     'vue',
   ],
   rules: {
-    'linebreak-style': "off",
-    quotes: [1,'single'],
-    eqeqeq: "error",
-    strict: "error",
-    'use-isnan': "error",
+    'linebreak-style': 'off',
+    quotes: [1, 'single'],
+    eqeqeq: 'error',
+    strict: 'error',
+    'use-isnan': 'error',
     'prefer-reflect': 1,
     'prefer-const': 1,
     'prefer-spread': 1,
     'id-match': 1,
-    indent: [2,2],
+    indent: [2, 2],
     'no-var': 2,
     'no-use-before-define': 2,
-    semi: "off",
-    'no-console': "off",
-    'global-require': "off",
-    'no-param-reassign': "off",
-    'no-shadow': "off",
-    // 'import/extensions':['error','always',{
-    //   'js':'never',
-    //   'vue':'never'
-    // }]
+    semi: 'off',
+    'no-console': 'off',
+    'global-require': 'off',
+    'no-param-reassign': 'off',
+    'no-shadow': 'off',
+    'object-curly-spacing': 'off',
+    'import/extensions': ['error', 'always', {
+      'js': 'never',
+      'vue': 'never',
+    }],
+    'import/no-extraneous-dependencies': 0,
   },
-};
+}
