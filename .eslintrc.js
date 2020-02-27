@@ -58,10 +58,11 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-shadow': 'off',
     'object-curly-spacing': 'off',
-    'import/extensions': ['error', 'always', {
+    'import/extensions': [2, 'never', {
       'js': 'never',
       'vue': 'never',
     }],
-    'import/no-extraneous-dependencies': 0,
+    "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    "import/no-unresolved": 0
   },
 }

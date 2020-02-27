@@ -1,38 +1,17 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
+    <button @click="handleClick">触发事件</button>
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
+        <child-hello/>
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
+        {{app.userInfo}}
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex"
-          target="_blank"
-          rel="noopener"
-          >vuex</a
-        >
+        <button @click="changeUserInfo">修改用户信息</button>
       </li>
       <li>
         <a
@@ -103,10 +82,26 @@
 </template>
 
 <script>
+import ChildHello from 'components/ChildHello'
+import Emitter from '@/mixins/emitter'
+
+
 export default {
   name: 'HelloWorld',
+  components: {ChildHello},
+  mixins: [Emitter],
+  inject: ['app'],
   props: {
     msg: String,
+  },
+  methods: {
+    handleClick() {
+      this.broadcast('ChildHello', 'on-message', 'Hello Vue.js')
+    },
+    changeUserInfo() {
+      // 可以直接通过this.app 就可以调用 app.vue 里的方法
+      this.app.getUserInfo()
+    },
   },
 };
 </script>

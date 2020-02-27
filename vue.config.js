@@ -26,7 +26,7 @@ module.exports = {
       new CompressionPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(`\\.(${ ['js', 'css'].join('|') }$)`),
+        test: new RegExp(`\\.(${['js', 'css'].join('|')}$)`),
         threshold: 8192,
         minRatio: 0.8,
       }),
@@ -48,10 +48,13 @@ module.exports = {
   },
   chainWebpack: (config) => {
     // console.log('传进来的配置文件是...', config)
-    config.resolve.alias.set('@', resolve('src')).set('assets', resolve('src/assets'))
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('assets', resolve('src/assets'))
+      .set('components', resolve('src/components'))
     config.resolve.extensions.add('.vue').add('.js').add('.scss')
     config.plugin('define').tap((args) => {
-      let name = 'process.env'
+      const name = 'process.env'
       args[0][name] = merge(args[0][name], cfg)
       return args
     })
