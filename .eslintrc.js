@@ -62,7 +62,8 @@ module.exports = {
       'js': 'never',
       'vue': 'never',
     }],
-    "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    // "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [0, {"devDependencies": true}],
     "import/no-unresolved": 0
   },
 }

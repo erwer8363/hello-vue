@@ -65,17 +65,10 @@
         >
       </li>
       <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
+        <slot-com/>
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
+        <my-check-box v-model="foo" value="some value"/>
       </li>
     </ul>
   </div>
@@ -83,16 +76,23 @@
 
 <script>
 import ChildHello from 'components/ChildHello'
+import MyCheckBox from 'components/MyCheckBox/index'
+import SlotCom from 'components/slotCom'
 import Emitter from '@/mixins/emitter'
 
 
 export default {
   name: 'HelloWorld',
-  components: {ChildHello},
+  components: {SlotCom, MyCheckBox, ChildHello},
   mixins: [Emitter],
   inject: ['app'],
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      foo: 0,
+    }
   },
   methods: {
     handleClick() {
